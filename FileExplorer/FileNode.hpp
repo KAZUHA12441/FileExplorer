@@ -12,6 +12,8 @@
 #include <string>
 #include <ctime>
 #include <fstream>
+#include <iostream>
+
 
 namespace File_n
 {
@@ -21,18 +23,14 @@ namespace File_n
 	FILE
   }FFType_e;
 
-  typedef struct
-  {
-	   
-  };
-
   class FileNode_c
 {
   protected:
-   std::string name_;  //文件名字
-	FFType_e type_;                //文件类型
-	double size_;                      //文件大小
-	std::string create_time_;                 //创建时间
+	std::string  address = NULL;
+    std::string name_ = NULL;                                        //文件名字
+	FFType_e type_ = FILE;                                            //文件类型
+	double size_ = 0;                                                           //文件大小
+	std::string create_time_= "1970/01/01";                //创建时间
   public:
 	FileNode_c(FFType_e type, std::string name);
 	FileNode_c(FFType_e type, std::string name, double size);
@@ -40,6 +38,9 @@ namespace File_n
 	void SetSize(double size); 
 	std::string  GetCreateTime();
 	FFType_e GetFileType();
+	void  SetAddress(std::string address);
+
+	virtual void GetAttributes() = 0;
 };
    
 }

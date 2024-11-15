@@ -65,4 +65,9 @@ namespace File_n
 	{
 		return  type_;
 	}
+
+	void FileNode_c::SetAddress(std::string address)
+	{
+		this->address = address;
+	}
 }

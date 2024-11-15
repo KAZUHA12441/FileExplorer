@@ -14,7 +14,7 @@ namespace File_n
 	  public: 
 		  ContainNum* contain;
 		  Folder_c(std::string name);
-		  GetFolderAttribute(); 
+		  void GetAttributes();
 	};
 }
 

@@ -14,7 +14,7 @@ class File_c :public FileNode_c
 	   void ChangeOwner(std::string owner);
 	   bool Open();
 	   bool Close();
-	   
+	   void GetAttributes();
 };
 }
 

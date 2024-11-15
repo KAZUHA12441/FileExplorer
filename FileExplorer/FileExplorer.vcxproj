@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="BST.cpp" />
+    <ClCompile Include="disk_c.cpp" />
     <ClCompile Include="FileExplorer.cpp" />
     <ClCompile Include="FileNode.cpp" />
     <ClCompile Include="File_c.cpp" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="BinaryTree.hpp" />
     <ClInclude Include="BST.hpp" />
+    <ClInclude Include="disk_c.hpp" />
     <ClInclude Include="FileNode.hpp" />
     <ClInclude Include="File_c.hpp" />
     <ClInclude Include="Folder_c.hpp" />
