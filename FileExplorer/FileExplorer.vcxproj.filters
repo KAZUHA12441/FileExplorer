@@ -28,6 +28,12 @@
     <Filter Include="源文件\Disk">
       <UniqueIdentifier>{28dc2f0f-8e9f-43be-9fdb-081463bc3fa8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\HashTable">
+      <UniqueIdentifier>{6205a2c5-c040-4254-8b61-81dbac23030c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Explorer">
+      <UniqueIdentifier>{857fd192-85ee-405a-add2-fa06f84a39af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileNode.cpp">
@@ -54,6 +60,12 @@
     <ClCompile Include="disk_c.cpp">
       <Filter>源文件\Disk</Filter>
     </ClCompile>
+    <ClCompile Include="HashTable.cpp">
+      <Filter>源文件\HashTable</Filter>
+    </ClCompile>
+    <ClCompile Include="Explorer.cpp">
+      <Filter>源文件\Explorer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BST.hpp">
@@ -75,6 +87,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="disk_c.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HashTable.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Explorer.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

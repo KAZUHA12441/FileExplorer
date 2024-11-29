@@ -130,19 +130,23 @@
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="BST.cpp" />
     <ClCompile Include="disk_c.cpp" />
+    <ClCompile Include="Explorer.cpp" />
     <ClCompile Include="FileExplorer.cpp" />
     <ClCompile Include="FileNode.cpp" />
     <ClCompile Include="File_c.cpp" />
     <ClCompile Include="Folder_c.cpp" />
+    <ClCompile Include="HashTable.cpp" />
     <ClCompile Include="Time_c.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryTree.hpp" />
     <ClInclude Include="BST.hpp" />
     <ClInclude Include="disk_c.hpp" />
+    <ClInclude Include="Explorer.hpp" />
     <ClInclude Include="FileNode.hpp" />
     <ClInclude Include="File_c.hpp" />
     <ClInclude Include="Folder_c.hpp" />
+    <ClInclude Include="HashTable.hpp" />
     <ClInclude Include="Time_c.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

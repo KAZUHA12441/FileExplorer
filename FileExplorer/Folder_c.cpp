@@ -12,9 +12,6 @@ namespace File_n
 		size_ = 0;
 	}
 
-	
-
-
 	void Folder_c::GetAttributes()
 	{
 		std::cout << "Â·¾¶£º" << address << std::endl;
