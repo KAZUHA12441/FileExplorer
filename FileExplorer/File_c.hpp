@@ -10,7 +10,8 @@ class File_c :public FileNode_c
    public:
 	   std::string owner_;
 	   std::string  vistit_time_;
-	   File_c(std::string owner, std::string name, double size);
+	   std::string  file_type;
+	   File_c(std::string owner, std::string name, double size, std::string  file_type);
 	   void ChangeOwner(std::string owner);
 	   bool Open();
 	   bool Close();

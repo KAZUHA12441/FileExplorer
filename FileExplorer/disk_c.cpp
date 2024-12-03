@@ -29,6 +29,7 @@ namespace  Disk_n
 		temp->name = name;
 		temp->Dtype = LOCAL;
 		temp->Etype = NTFS;
+		temp->now_size = size;
 		if (physical_size_ - now_size_ >= size)
 		{
 			temp->size = size;
@@ -55,7 +56,7 @@ namespace  Disk_n
 	{
 		for (Disk_s* it : partition_)
 		{
-			if (it->name.compare(name))
+			if (it->name==name)
 			{
 				return it;
 			}
@@ -103,5 +104,7 @@ namespace  Disk_n
 	{
 		return myDisk;
 	}
+
+	
 }
  

@@ -44,12 +44,14 @@ namespace Disk_n
      std::string name;
      float physical_size_ = 102400;                   //byte
      float now_size_ = 0;
-     std::vector<Disk_s *> partition_;
+    
  public:
+     std::vector<Disk_s *> partition_;
      static  Disk_c* myDisk;
      Disk_c(std::string name,float physicl_size);
      bool  CreatePartition(std::string name,float size, DiskType_e Dtype, ExplorType_e Etype);
      Disk_s* GetPartition(std::string  name);
+     
      bool DeletePartiton(std::string name);
      float GetFreeSpace(std::string name);
      static Disk_c* GetInstance();

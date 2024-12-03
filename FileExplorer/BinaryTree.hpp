@@ -14,10 +14,7 @@ namespace BinaryTree_n
 	template<class T> class BinaryTree_c
 	{
 	    private:
-        static void  PreOrder(node<T>* root);
-		static void  PostOrder(node<T>* root);
-		static void  InOrder(node<T>* root);
-		static void  Destroy(node<T>* root);
+        
 		protected:
 			node<T>* root_;
 			int node_count_; 
@@ -36,9 +33,18 @@ namespace BinaryTree_n
 			void  PostOrder();
 			void  InOrder();
 			void  Destroy();
-		
+
+		    static void  PreOrder(node<T>* root);
+		    static void  PostOrder(node<T>* root);
+		    static void  InOrder(node<T>* root);
+		    static void  Destroy(node<T>* root);
 			node<T>* Search(node<T>* root, T const& data);
 			
+
+
+			void RightOrder(node<T>* root);
+			
+			void LeftOrder(node<T>* root);
 			node<T>  *GetTreeRoot();
 
 			~BinaryTree_c();

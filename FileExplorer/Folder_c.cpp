@@ -20,4 +20,32 @@ namespace File_n
 		std::cout << "包含：" << contain->file_num << "个文件" << contain->folder_num << "个子文件夹" << std::endl;
 		std::cout << "创建时间：" << create_time_ << std::endl;
 	}
+
+	void Folder_c::createFile()
+	{
+		contain->file_num++; 
+	}
+	void Folder_c::createFolder()
+	{
+		contain->folder_num++;
+	}
+
+	void Folder_c::deleteFile()
+	{
+		if (contain->file_num> 0)
+		{
+			contain->file_num--;
+		 }
+	}
+	void Folder_c::deleteFolder()
+	{
+		if (contain->folder_num > 0)
+		{
+			contain->folder_num--;
+		}
+	}
+	std::string Folder_c::GetAddress()
+	{
+		return address;
+	}
 }

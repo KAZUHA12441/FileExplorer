@@ -13,20 +13,17 @@ namespace Explorer_n {
         FOLDER,
     }Type_e;
 
-    typedef  struct
-    {
-        unsigned int address;
-        Type_e Type;
-    }SeachHight;
+   
 
   class Explorer
   {
     private:
-        std::stack<SeachHight> add;
+        std::stack<BinaryTree_n::node<Disk_n::Key_s*>*> add;
         std::string address;
-        File_n::Folder_c *nowpos1;
-        File_n::File_c *nowpos2;
-        Type_e nowtype;
+        Disk_n::Disk_c* mydisk = nullptr;
+        Disk_n::Disk_s  *now_disk = nullptr;
+        BinaryTree_n::node<Disk_n::Key_s*>* now = nullptr;
+        BinaryTree_n::node<Disk_n::Key_s*>* mouse = nullptr;
     public:
         
        
@@ -37,15 +34,22 @@ namespace Explorer_n {
         void ReadTree();
         void ReadAdd();
         void GoBack();
-        void GoInto();
-        void CreateFile();
-        void DeleteFile();
-        void CreateFolder();
-        void DeleteFolder();
+        void GoInto(std::string temp);
+        void CreateFile(std::string owner, std::string name, double size,  std::string file_type);
+        void DeleteFile(std::string name);
+        void CreateFolder(std::string name);
+        void DeleteFolder(std::string name);
+        void Rename();
+        void Mouse();
         void Search();
         void Exit();
         void Run();
+        void Show();
+        
   };
+  static void LeftOrder(BinaryTree_n::node<Disk_n::Key_s*>* root_);
+  static void RightOrder(BinaryTree_n::node<Disk_n::Key_s*>* root_);
+  static BinaryTree_n::node<Disk_n::Key_s*>*root_search(BinaryTree_n::node<Disk_n::Key_s*>* root_, std::string name);
 }
 
 

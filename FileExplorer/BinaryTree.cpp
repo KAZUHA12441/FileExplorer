@@ -237,4 +237,23 @@ namespace BinaryTree_n
 	 {
 		 Destroy(root_);
 	 }
+
+	 template<class T>
+	 void BinaryTree_c<T>::LeftOrder(node<T>* root)
+	 {
+		 if (root != nullptr)
+		 {
+			 RightOrder(root->left_child);
+			 std::cout << root->data << std::endl;
+		 }
+	 }
+	 template<class T>
+	 void BinaryTree_c<T>::RightOrder(node<T>* root)
+	 {
+		 if (root != nullptr)
+		 {
+			 RightOrder(root->right_child);
+			 std::cout << root->data << std::endl;
+		 }
+	 }
 }

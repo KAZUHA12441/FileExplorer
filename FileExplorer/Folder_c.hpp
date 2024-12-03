@@ -11,10 +11,15 @@ namespace File_n
 
 	class Folder_c :public FileNode_c
 	{
-	  public: 
-		  ContainNum* contain;
-		  Folder_c(std::string name);
-		  void GetAttributes();
+	public:
+		ContainNum* contain;
+		Folder_c(std::string name);
+		void GetAttributes();
+		void createFile();
+		void createFolder();
+		void deleteFile();
+		void deleteFolder();
+		std::string GetAddress();
 	};
 }
 
