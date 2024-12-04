@@ -13,17 +13,33 @@ namespace Explorer_n {
         FOLDER,
     }Type_e;
 
-   
+    typedef struct
+    {
+        std::string name;
+        int size;
+        std::string owner;
+        std::string file_type;
+        std::string  command;
+       
+       
+    }InputData_s;
 
   class Explorer
   {
     private:
+        void GetInputName();
+        void GetInputOwner();
+        void GetInputSize();
+        void GetInputCommand();
+
         std::stack<BinaryTree_n::node<Disk_n::Key_s*>*> add;
         std::string address;
         Disk_n::Disk_c* mydisk = nullptr;
         Disk_n::Disk_s  *now_disk = nullptr;
         BinaryTree_n::node<Disk_n::Key_s*>* now = nullptr;
         BinaryTree_n::node<Disk_n::Key_s*>* mouse = nullptr;
+        InputData_s * data;
+        bool InitCp; 
     public:
         
        
@@ -32,13 +48,13 @@ namespace Explorer_n {
         void Help();
         void ReadAttributes();
         void ReadTree();
-        void ReadAdd();
+        std::string ReadAdd();
         void GoBack();
         void GoInto(std::string temp);
-        void CreateFile(std::string owner, std::string name, double size,  std::string file_type);
-        void DeleteFile(std::string name);
-        void CreateFolder(std::string name);
-        void DeleteFolder(std::string name);
+        void CreateFile();
+        void DeleteFile();
+        void CreateFolder();
+        void DeleteFolder();
         void Rename();
         void Mouse();
         void Search();
