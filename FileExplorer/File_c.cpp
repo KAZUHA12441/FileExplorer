@@ -53,4 +53,9 @@ namespace File_n
 		std::cout << "·ÃÎÊÊ±¼ä£º" << vistit_time_ << std::endl;
 	}
 
+	std::string File_c::GetAddress()
+	{
+		 return address;
+	}
+
 }

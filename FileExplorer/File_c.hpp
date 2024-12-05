@@ -16,6 +16,7 @@ class File_c :public FileNode_c
 	   bool Open();
 	   bool Close();
 	   void GetAttributes();
+	   std::string GetAddress();
 };
 }
 

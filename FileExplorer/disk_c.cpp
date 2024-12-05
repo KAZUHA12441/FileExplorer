@@ -58,6 +58,7 @@ namespace  Disk_n
 		{
 			if (it->name==name)
 			{
+				std::cout << it->name << std::endl;
 				return it;
 			}
 		}

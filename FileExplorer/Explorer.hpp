@@ -55,13 +55,14 @@ namespace Explorer_n {
         void DeleteFile();
         void CreateFolder();
         void DeleteFolder();
-        void Rename();
+        void Rename(std::string name);
         void Mouse();
-        void Search();
+        void Search(std::string name);
         void Exit();
         void Run();
         void Show();
         
+        std::string GetMouse();
   };
   static void LeftOrder(BinaryTree_n::node<Disk_n::Key_s*>* root_);
   static void RightOrder(BinaryTree_n::node<Disk_n::Key_s*>* root_);

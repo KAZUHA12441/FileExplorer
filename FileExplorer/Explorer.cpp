@@ -43,6 +43,7 @@ namespace Explorer_n
 			}
 			else if (temp == "Mouse")
 			{
+				GetInputName();
 				Mouse();
 			}
 			else if (temp == "readAttributes")
@@ -63,9 +64,8 @@ namespace Explorer_n
 			}
 			else if (temp == "goInto")
 			{
-				std::cout << "进入哪个盘:";
-				std::cin >>temp;
-				GoInto(temp);
+				GetInputName();
+				GoInto(data->name);
 			}
 			else if (temp == "createFile")
 			{
@@ -93,7 +93,7 @@ namespace Explorer_n
 			else if (temp == "search")
 			{
 				GetInputName();
-				Search();
+				Search(data->name);
 			}
 			else if (temp == "exit")
 			{
@@ -183,6 +183,10 @@ namespace Explorer_n
 		if (add.empty())
 		{
 			now_disk =  mydisk->GetPartition(temp);
+			if (now_disk == nullptr)
+			{
+				return;
+			}
 			now = now_disk->root_->GetTreeRoot();
 			now->data = new  Disk_n::Key_s; 
 			now->data->Folder = new File_n::Folder_c(now_disk->name);
@@ -374,13 +378,20 @@ namespace Explorer_n
 		}
 	}
 
-	void Explorer::Rename()
+	void Explorer::Rename(std::string name)
 	{
+		if (mouse->data->Type == true)
+		{
+			mouse->data->File->Rename(name);
+		}
+		else {
+			mouse->data->Folder->Rename(name);
+		}
 	}
 
-	void Explorer::Search()
+	void Explorer::Search(std::string name)
 	{
-
+		root_search(now->left_child,name);
 	}
 
 	void  Explorer::Exit()
@@ -410,6 +421,14 @@ namespace Explorer_n
 		std::cout << "                               Explorer                              " << std::endl;
 		if(now != nullptr)
 		std::cout <<"地址：" << ReadAdd()<< std::endl;
+		if (mouse != nullptr)
+		{
+			std::cout << "当前指向" << std::endl;
+			if (mouse->data->Type == true)
+				std::cout << mouse->data->File->name_ << std::endl;
+			else
+				std::cout<< mouse->data->Folder->name_ << std::endl;
+		}
 		if (add.empty())
 		{
 			for (Disk_n::Disk_s* it : mydisk->partition_)
@@ -427,6 +446,18 @@ namespace Explorer_n
 		}
 	}
 
+	std::string Explorer::GetMouse()
+	{
+		if (mouse->data != nullptr)
+		{
+			return mouse->data->File->name_;
+		}
+		else
+		{
+			return mouse->data->Folder->name_;
+		}
+	}
+
 	
 
 
@@ -437,8 +468,6 @@ namespace Explorer_n
 	{
 		Show();
 		GetCommand();
-
-
 	}
 	
 	/*
@@ -534,7 +563,14 @@ namespace Explorer_n
 				{
 					if (temp1->data->Folder->name_ == name)
 					{
-						return temp1;
+						std::cout << temp1->data->Folder->GetAddress() << std::endl;
+					}
+				}
+				if (temp1->data->Type == true)
+				{
+					if (temp1->data->File->name_ == name)
+					{
+						std::cout<< temp1->data->File ->GetAddress()<< std::endl;
 					}
 				}
 				temp1 = temp1->right_child;
