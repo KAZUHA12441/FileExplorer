@@ -6,7 +6,7 @@ namespace File_n
 	/*
 	* 创建一个文件
 	*/
-	File_c::File_c(std::string owner, std::string name, double size,std::string file_type) :FileNode_c(FILE, name, size), owner_(owner),file_type(file_type) {
+	File_c::File_c(std::string owner, std::string name, double size,std::string file_type) :FileNode_c(FILE, name, size), owner_(owner), file_type(file_type) {
 		vistit_time_ = create_time_; 
 	}
 

@@ -71,6 +71,4 @@ namespace File_n
 		this->address = address;
 	}
 
-
-	
 }

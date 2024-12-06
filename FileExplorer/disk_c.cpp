@@ -106,6 +106,23 @@ namespace  Disk_n
 		return myDisk;
 	}
 
-	
+	/*
+	* @brief 增加当前容量
+	*/
+	void  Disk_c::UpNowSize(Disk_s* now_disk, int size)
+	{
+		now_disk->now_size += size;
+	}
+
+	/*
+	* @brief  减少当前容容量
+	*/
+	void Disk_c::DownNowSize(Disk_s* now_disk, int size)
+	{
+		if (now_disk->now_size > size)
+			now_disk->now_size -= size;
+		else
+			std::cout << "空间不足" << std::endl; 
+	}
 }
  

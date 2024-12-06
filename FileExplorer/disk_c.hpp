@@ -55,6 +55,8 @@ namespace Disk_n
      bool DeletePartiton(std::string name);
      float GetFreeSpace(std::string name);
      static Disk_c* GetInstance();
+     void UpNowSize(Disk_s* now_disk, int size);
+     void DownNowSize(Disk_s* now_disk, int size);
  };
 }
 

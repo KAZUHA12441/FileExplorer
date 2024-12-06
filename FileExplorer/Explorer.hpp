@@ -4,6 +4,9 @@
 #include <stack>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <fstream>
+#include <sstream> 
 
 namespace Explorer_n {
   
@@ -30,7 +33,12 @@ namespace Explorer_n {
         void GetInputName();
         void GetInputOwner();
         void GetInputSize();
-        void GetInputCommand();
+        void GetInputFile();
+        void Init();
+        void Inputfile(std::string temp);
+        BinaryTree_n::node<Disk_n::Key_s*> *FindFolder();
+        void Destroy(BinaryTree_n::node<Disk_n::Key_s*>* root);
+        std::fstream* file = nullptr;
 
         std::stack<BinaryTree_n::node<Disk_n::Key_s*>*> add;
         std::string address;
@@ -39,15 +47,16 @@ namespace Explorer_n {
         BinaryTree_n::node<Disk_n::Key_s*>* now = nullptr;
         BinaryTree_n::node<Disk_n::Key_s*>* mouse = nullptr;
         InputData_s * data;
-        bool InitCp; 
+        bool InitCp  = false; 
+        bool frist = false;
     public:
         
        
         Explorer();
+        
         int GetCommand();
         void Help();
         void ReadAttributes();
-        void ReadTree();
         std::string ReadAdd();
         void GoBack();
         void GoInto(std::string temp);

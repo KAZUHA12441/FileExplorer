@@ -11,8 +11,6 @@ int main()
     while(1)
     {
         explorer->Run();
-
-
     }
 
     return  0;

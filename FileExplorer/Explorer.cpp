@@ -1,58 +1,68 @@
 #include "Explorer.hpp"
-#include <iostream>
-#include <fstream>
 
 namespace Explorer_n
 {
-	std::vector< std::string>  command_Group = {"/help 查看命令", 
-		                                                                      "/readAttributes 查看属性",
-		                                                                      "/readTree 查看文件树",
-		                                                                      "/readAdd 查看当前地址",
-	                                                                          "/goBack 回到上一层",
-	                                                                          "/goInto 进入下一层",
-	                                                                          "/createFile 在当期目录下创建一个文件",
-	                                                                          "/deleteFile 删除当前目录下的一个文件",
-	                                                                          "/createFolder 在当前目录下创建一个文件夹",
-	                                                                          "/deleteFolder 删除当前目录下的一个文件夹",
-		                                                                      "/Rename 对文件或者文件夹进行重命名"
-	                                                                          "/search 查找路径",
-	                                                                          "/exit 结束程序"};
+	std::vector< std::string>  command_Group = { "/help 查看命令",
+																			  "/readAttributes 查看属性",
+																			  "/readTree 查看文件树",
+																			  "/readAdd 查看当前地址",
+																			  "/goBack 回到上一层",
+																			  "/goInto 进入下一层",
+																			  "/createFile 在当期目录下创建一个文件",
+																			  "/deleteFile 删除当前目录下的一个文件",
+																			  "/createFolder 在当前目录下创建一个文件夹",
+																			  "/deleteFolder 删除当前目录下的一个文件夹",
+																			  "/Rename 对文件或者文件夹进行重命名"
+																			  "/search 查找路径",
+																			  "/exit 结束程序" };
 	Explorer::Explorer()
 	{
+
+		file = new std::fstream();
 		mydisk = Disk_n::Disk_c::myDisk;
 		mydisk->CreatePartition("C:", 1024, Disk_n::LOCAL, Disk_n::NTFS);
 		mydisk->CreatePartition("D:", 2048, Disk_n::LOCAL, Disk_n::NTFS);
 		data = new InputData_s;
 	}
 
+	/*
+	* @brief 获取命令
+	*/
 	int Explorer::GetCommand()
-	{ 
+	{
 		std::string  temp;
 		std::string mess;
 		size_t i = 0;
 		size_t j = 0;
+		if(InitCp == true)
 		std::cin >> data->command;
 		if (data->command.at(0) == '/')
 		{
 			i = data->command.find_first_of('/');
-		    temp = data->command.substr(i + 1);
+			temp = data->command.substr(i + 1);
 			system("cls");
-			if (temp == "help") 
+			if (temp == "help")
 			{
 				Help();
 			}
 			else if (temp == "Mouse")
 			{
-				GetInputName();
+				if (InitCp == true)
+				{
+					Inputfile(data->command);
+					GetInputName();
+					Inputfile(data->name);
+				}
+				else
+				{
+					GetInputName();
+				}
 				Mouse();
 			}
 			else if (temp == "readAttributes")
 			{
+				
 				ReadAttributes();
-			}
-			else if (temp == ":readTree")
-			{
-				ReadTree();
 			}
 			else if (temp == "readAdd")
 			{
@@ -60,40 +70,122 @@ namespace Explorer_n
 			}
 			else if (temp == "goBack")
 			{
+				if (InitCp == true)
+				{
+					Inputfile(data->command);
+				}
 				GoBack();
 			}
 			else if (temp == "goInto")
-			{
-				GetInputName();
+			{	
+				if (InitCp == true)
+				{
+					Inputfile(data->command);	
+					GetInputName();
+					Inputfile(data->name);
+				}
+				else
+				{
+					GetInputName();
+				}
+			
 				GoInto(data->name);
 			}
 			else if (temp == "createFile")
 			{
-				GetInputName();
-				GetInputSize();
-				GetInputOwner();
-				GetInputCommand();
+				if (InitCp == true)
+				{
+				  Inputfile(data->command); 
+				  GetInputName();
+				  GetInputSize();
+				  GetInputOwner();
+				  GetInputFile();
+                  Inputfile(data->name);
+				  file->open("file.dat", std::ios::app);
+				  if (!*file) {
+					  std::cerr << "Unable to open file!" << std::endl;
+					  while (1);
+				  }
+				 *file << std::to_string(data->size) << std::endl;
+				 file->close();
+				  Inputfile(data->owner);
+				  Inputfile(data->file_type);
+				}
+				else
+				{
+				   GetInputName();
+				   GetInputSize();
+				   GetInputOwner();
+				   GetInputFile();
+				}
+	              
 				CreateFile();
 			}
 			else if (temp == "deleteFile")
 			{
-				GetInputName();
+				
+				if (InitCp == true)
+				{
+					Inputfile(data->command);
+					GetInputName();
+					Inputfile(data->name);
+				}
+				else
+				{
+					 GetInputName();
+				}
+
 				DeleteFile();
 			}
 			else if (temp == "createFolder")
 			{
-				GetInputName();
+				if (InitCp == true)
+				{
+					Inputfile(data->command);
+					GetInputName();
+					Inputfile(data->name);
+				}
+				else
+				{
+                     GetInputName();
+				}
 				CreateFolder();
 			}
 			else if (temp == "deleteFolder")
 			{
-				GetInputName();
+				
+				if (InitCp == true)
+				{
+					Inputfile(data->command);
+					GetInputName();
+					Inputfile(data->name);
+				}
+				else
+				{
+					 GetInputName();
+				}
 				DeleteFolder();
 			}
 			else if (temp == "search")
-			{
+			{    
 				GetInputName();
 				Search(data->name);
+			}
+			else if (temp == "Rename")
+			{
+				
+				if (InitCp == true)
+				{
+
+					Inputfile(data->command);
+					GetInputName();
+					Inputfile(data->name);
+				}
+				else
+				{
+                      GetInputName();
+				}
+				Rename(data->name);
 			}
 			else if (temp == "exit")
 			{
@@ -108,7 +200,7 @@ namespace Explorer_n
 		{
 			std::cout << "格式错误" << std::endl;
 		}
-
+		
 		return 0;
 	}
 
@@ -117,7 +209,7 @@ namespace Explorer_n
 	*/
 	void Explorer::Help()
 	{
-		for (std::string  temp : command_Group)
+		for (std::string temp : command_Group)
 		{
 			std::cout << temp << std::endl;
 		}
@@ -131,25 +223,22 @@ namespace Explorer_n
 	{
 		if (!add.empty())
 		{
-          if (now->data->Type == true)
-		 {
-			  now->data->File->GetAttributes();
-		 }
-		 else if(now->data->Type == false)
-		 {
-			  now->data->Folder->GetAttributes();
-		 }
+			if (mouse != nullptr)
+			{
+              if (mouse->data->Type == true)
+			 {
+				 mouse->data->File->GetAttributes();
+			 }
+			 else if (mouse->data->Type == false)
+			 {
+				 mouse->data->Folder->GetAttributes();
+			 }
+			}
+			
 		}
 	}
 
-	/*
-	* @查看文件树
-	*/
-	void Explorer::ReadTree()
-	{
-
-
-	}
+	
 
 	/*
 	* @brief 查看文件地址
@@ -169,43 +258,40 @@ namespace Explorer_n
 		}
 		nodetemp = add.top();
 		now = nodetemp;
-		
-		
 	}
-	
+
 	/*
 	* @brief  进入一个文件夹
 	* @param  temp 需进入的文件夹
 	*/
 	void Explorer::GoInto(std::string temp)
 	{
-		BinaryTree_n::node<Disk_n::Key_s*>*nodetemp = nullptr;
+		BinaryTree_n::node<Disk_n::Key_s*>* nodetemp = nullptr;
 		if (add.empty())
 		{
-			now_disk =  mydisk->GetPartition(temp);
+			now_disk = mydisk->GetPartition(temp);
 			if (now_disk == nullptr)
 			{
 				return;
 			}
 			now = now_disk->root_->GetTreeRoot();
-			now->data = new  Disk_n::Key_s; 
+			now->data = new  Disk_n::Key_s;
 			now->data->Folder = new File_n::Folder_c(now_disk->name);
 			now->data->Folder->SetAddress(now_disk->name);
 			add.push(now);
 		}
 		else
 		{
-			    nodetemp = root_search(now->left_child, temp);
-				if (nodetemp != nullptr)
-				{	
-					now = nodetemp;
-					add.push(now);
-					
-				}
-				else
-				{
-					std::cout << "无此文件夹" << std::endl;
-				}
+			nodetemp = FindFolder();
+			if (nodetemp != nullptr)
+			{
+				now = nodetemp;
+				add.push(now);
+			}
+			else
+			{
+				std::cout << "无此文件夹" << std::endl;
+			}
 		}
 	}
 
@@ -218,18 +304,21 @@ namespace Explorer_n
 
 		Disk_n::Key_s* mykey = new Disk_n::Key_s;
 		mykey->Type = true;
-		mykey->File = new File_n::File_c(data->owner,data->name, data->size,data->file_type); 
+		mykey->File = new File_n::File_c(data->owner, data->name+'.'+ data->file_type, data->size, data->file_type);
 
 		BinaryTree_n::node<Disk_n::Key_s*>* temp2 = new BinaryTree_n::node<Disk_n::Key_s*>;
 		temp2->data = mykey;
 		temp2->left_child = nullptr;
 		temp2->right_child = nullptr;
 		now->data->Folder->createFile();
+
+		mydisk->DownNowSize(now_disk, data->size);
+
 		if (!add.empty())
 		{
 			if (temp1 == nullptr)
 			{
-				temp2->data->File->SetAddress(now->data->Folder->name_ +"\\"+ mykey->File->name_+'.'+ mykey->File->file_type);
+				temp2->data->File->SetAddress(now->data->Folder->name_ + "\\" + mykey->File->name_ + '.' + mykey->File->file_type);
 				now->left_child = temp2;
 				return;
 			}
@@ -255,13 +344,16 @@ namespace Explorer_n
 		BinaryTree_n::node<Disk_n::Key_s*>* temp1;
 		BinaryTree_n::node<Disk_n::Key_s*>* temp2;
 		now->data->Folder->deleteFile();
+
+		
+
 		if (now->left_child != nullptr)
 		{
 			if (now->left_child->data->Type == true)
 			{
-				if (now->left_child->data->File->name_ == data->name) 
+				if (now->left_child->data->File->name_ == data->name)
 				{
-					temp1= now->left_child;
+					temp1 = now->left_child;
 					now->left_child = now->left_child->right_child;
 					return;
 				}
@@ -274,17 +366,21 @@ namespace Explorer_n
 					std::cout << "找不到此文件" << std::endl;
 					break;
 				}
-				if (temp1->data->File->name_ == data->name)
+				if (temp1->data->Type == true)
 				{
-					temp2->right_child = temp1->right_child;
-					delete temp1;
-					break;
+					if (temp1->data->File->name_ == data->name)
+					{
+						temp2->right_child = temp1->right_child;
+						//增加磁盘容量
+						mydisk->UpNowSize(now_disk, temp1->data->File->size_);
+						delete temp1;
+						break;
+					}
 				}
 				temp2 = temp1;
 				temp1 = temp1->right_child;
-				
 			}
-	   }
+		}
 		else
 		{
 			std::cout << "找不到文件" << std::endl;
@@ -324,7 +420,7 @@ namespace Explorer_n
 				}
 				temp1 = temp1->right_child;
 			}
-			temp2->data->Folder ->SetAddress(now->data->Folder->name_ + "\\" + mykey->Folder->name_);
+			temp2->data->Folder->SetAddress(now->data->Folder->name_ + "\\" + mykey->Folder->name_);
 			temp1->right_child = temp2;
 		}
 	}
@@ -340,7 +436,7 @@ namespace Explorer_n
 		now->data->Folder->deleteFolder();
 		if (now->left_child != nullptr)
 		{
-			if (now->left_child->data->Type == true)
+			if (now->left_child->data->Type == false)
 			{
 				if (now->left_child->data->File->name_ == data->name)
 				{
@@ -357,16 +453,17 @@ namespace Explorer_n
 					std::cout << "找不到此文件" << std::endl;
 					break;
 				}
-				if (temp1->data->Folder->name_ == data->name)
+				if (temp1->data->Type == false)
 				{
+                   if (temp1->data->Folder->name_ == data->name)
+				  {
 					temp2->right_child = temp1->right_child;
-					while (1)
-					{
-
-					}
+					Destroy(temp1->left_child);
 					delete temp1;
 					break;
+				 }
 				}
+				
 				temp2 = temp1;
 				temp1 = temp1->right_child;
 
@@ -391,7 +488,7 @@ namespace Explorer_n
 
 	void Explorer::Search(std::string name)
 	{
-		root_search(now->left_child,name);
+		root_search(now->left_child, name);
 	}
 
 	void  Explorer::Exit()
@@ -405,13 +502,58 @@ namespace Explorer_n
 	*/
 	void  Explorer::Mouse()
 	{
-		mouse = root_search(now, data->name);
+		BinaryTree_n::node<Disk_n::Key_s*>* temp1;
+		if (now->left_child != nullptr)
+		{
+			if (now->left_child->data->Type == true)
+			{
+				if (now->left_child->data->File->name_ == data->name)
+				{
+					mouse = now->left_child;
+					return;
+				}
+			}
+			else
+			{
+				if (now->left_child->data->Folder->name_ == data->name)
+				{
+					mouse = now->left_child;
+					return;
+				}
+			}
+			temp1 = now->left_child;
+			while (1)
+			{
+				if (temp1 == nullptr)
+				{
+					std::cout << "找不到此文件" << std::endl;
+					break;
+				}
+				if (temp1->data->Type == false)
+				{
+                   if (temp1->data->Folder->name_ == data->name)
+				   {
+					  mouse = temp1;
+					  break;
+				   }
+				}
+				else
+				{
+                    if (temp1->data->File->name_ == data->name)
+				   {
+					mouse = temp1;
+					break;
+				   }
+				}
+				
+					temp1 = temp1->right_child;
+			}
+		}
+		else
+		{
+			std::cout << "找不到文件" << std::endl;
+		}
 	}
-	
-
-
-
-
 
 	/*
 	* @brief 显示函数
@@ -419,15 +561,15 @@ namespace Explorer_n
 	void Explorer::Show()
 	{
 		std::cout << "                               Explorer                              " << std::endl;
-		if(now != nullptr)
-		std::cout <<"地址：" << ReadAdd()<< std::endl;
+		if (now != nullptr)
+			std::cout << "地址：" << ReadAdd() << std::endl;
 		if (mouse != nullptr)
 		{
-			std::cout << "当前指向" << std::endl;
+			std::cout << "当前指向";
 			if (mouse->data->Type == true)
 				std::cout << mouse->data->File->name_ << std::endl;
 			else
-				std::cout<< mouse->data->Folder->name_ << std::endl;
+				std::cout << mouse->data->Folder->name_ << std::endl;
 		}
 		if (add.empty())
 		{
@@ -446,6 +588,9 @@ namespace Explorer_n
 		}
 	}
 
+	/*
+	* 获取指向的文件结点
+	*/
 	std::string Explorer::GetMouse()
 	{
 		if (mouse->data != nullptr)
@@ -458,25 +603,91 @@ namespace Explorer_n
 		}
 	}
 
-	
-
-
 	/*
 	* @brief  运行函数
 	*/
 	void Explorer::Run()
 	{
+		
+		if (!InitCp)
+		{
+			Init();
+		}
 		Show();
 		GetCommand();
 	}
+
+	/*
+	* @brief 文件初始化
+	 */
+	void Explorer::Init()
+	{
+		if (!frist)
+		{
+          file->open("file.dat", std::ios::in);
+		  frist = true;
+		}
+		if (!(*file)) {
+			std::cerr << "Unable to open file!" << std::endl;
+			while (1);
+		}
+		std::string line;
+		if (std::getline(*file, line))
+		{
+			 data->command = line;
+		}
+		else
+		{
+			file->close();
+			while (1)
+			{
+				if (add.empty())
+				{
+					break;
+				}
+				GoBack();
+				mouse = nullptr;
+			}
+			InitCp = true;
+		}
+	}
+
 	
+	/*
+	* @输入到文件
+	*/
+	void Explorer::Inputfile(std::string temp)
+	{
+		file->open("file.dat", std::ios::app);
+		if (!*file) {
+			std::cerr << "Unable to open file!" << std::endl;
+			while (1);
+		}
+		*file << temp << std::endl;
+		file->close();
+	}
+
+
+
 	/*
 	* @brief 获取输入的名字
 	*/
 	void Explorer::GetInputName()
 	{
-		std::cout << "文件名";
-		std::cin >> data->name;
+		std::string line;
+		if (InitCp == true)
+		{
+          std::cout << "文件名";
+		  std::cin >> data->name;
+		}
+		else
+		{
+			if (std::getline(*file, line))
+			{
+				data->name = line;
+			}
+		}
+		
 	}
 
 	/*
@@ -484,8 +695,20 @@ namespace Explorer_n
 	 */
 	void Explorer::GetInputOwner()
 	{
-		std::cout << "拥有者";
-		std::cin >> data->owner;
+		std::string line;
+		if (InitCp == true)
+		{
+          std::cout << "拥有者";
+		  std::cin >> data->owner;
+		}
+		else
+		{
+			if (std::getline(*file, line))
+			{
+				data->owner = line;
+			}
+		}
+		
 	}
 
 	/*
@@ -493,22 +716,41 @@ namespace Explorer_n
 	*/
 	void Explorer::GetInputSize()
 	{
-		std::cout << "大小";
-		std::cin >> data->size;
+		std::string line;
+		if (InitCp == true)
+		{
+				std::cout << "大小";
+		       std::cin >> data->size;
+		}
+		else
+		{
+			if (std::getline(*file, line))
+			{
+				data->size = std::stoi(line);
+			}
+		}
+		
 	}
 
 	/*
 	*  @brief 获取输入命令
 	*/
-	void Explorer::GetInputCommand()
+	void Explorer::GetInputFile()
 	{
+		std::string line;
+		if (InitCp == true)
+		{
 		std::cout << "文件类型";
 		std::cin >> data->file_type;
+		}
+		else
+		{
+			if (std::getline(*file, line))
+			{
+				data->file_type = line;
+			}
+		}
 	}
-
-	
-
-	
 
 	/*
 	* @brief 左遍历
@@ -536,7 +778,7 @@ namespace Explorer_n
 		{
 			RightOrder(root_->right_child);
 			if (root_->data->Type == true)
-				std::cout << root_->data->File->name_ << '.' << root_->data->File->file_type << std::endl;
+				std::cout << root_->data->File->name_ << std::endl;
 			else
 				std::cout << root_->data->Folder->name_ << std::endl;
 		}
@@ -547,7 +789,7 @@ namespace Explorer_n
 	* @param root_ 需要查找结点的根
 	* @param name 查找的键值
 	*/
-	static BinaryTree_n::node<Disk_n::Key_s*> *root_search(BinaryTree_n::node<Disk_n::Key_s*>* root_,std::string name)
+	static BinaryTree_n::node<Disk_n::Key_s*> *root_search(BinaryTree_n::node<Disk_n::Key_s*>*root_, std::string name)
 	{
 		BinaryTree_n::node<Disk_n::Key_s*>* temp1 = nullptr;
 		if (root_ != nullptr)
@@ -577,9 +819,61 @@ namespace Explorer_n
 			}
 			return nullptr;
 		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
+	/*
+	* @brief 找文件夹
+	*/
+	BinaryTree_n::node<Disk_n::Key_s*>* Explorer::FindFolder()
+	{
+		BinaryTree_n::node<Disk_n::Key_s*>* temp = nullptr;
+		if (now->left_child != nullptr)
+		{
+			temp = now->left_child;
+			while (1)
+			{
+				if (temp == nullptr)
+				{
+					break;
+				}
+				if (temp->data->Type == false)
+				{
+					if (temp->data->Folder->name_ == data->name)
+					{
+						return temp;
+					}
+				}
+				temp = temp->right_child;
+			}
+			return nullptr;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+	void Explorer::Destroy(BinaryTree_n::node<Disk_n::Key_s*> *root)
+	{
+		if (root != nullptr && root->left_child != nullptr)
+		{
+			Destroy(root->left_child);
+		}
+		else if (root != nullptr && root->right_child != nullptr)
+		{
+			Destroy(root->right_child);
+		}
+		if (root->data->Type == true)
+		{
+			mydisk->UpNowSize(now_disk, root->data->File->size_);
+		}
+		delete root;
 	}
 }
 
 
 
-
+ 

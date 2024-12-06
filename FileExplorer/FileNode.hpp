@@ -29,10 +29,11 @@ namespace File_n
 	std::string  address;
                                             //文件名字
 	FFType_e type_ = FILE;                                            //文件类型
-	double size_ = 0;                                                           //文件大小
+	
 	std::string create_time_= "1970/01/01";                //创建时间
   public:
 	std::string name_;
+	double size_ = 0;                                                           //文件大小
 	FileNode_c(FFType_e type, std::string name);
 	FileNode_c(FFType_e type, std::string name, double size);
 	bool Rename(std::string name);
